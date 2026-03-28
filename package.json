@@ -1,0 +1,9 @@
+{
+  "name": "bls-web-redesign",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@google/stitch-sdk": "^0.0.3"
+  }
+}
