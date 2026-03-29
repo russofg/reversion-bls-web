@@ -308,114 +308,128 @@ const events: PortfolioItem[] = [
   const lbCategory = document.querySelector("[data-lightbox-category]");
   const lbClose = document.querySelector("[data-lightbox-close]");
 
-  let currentIndex = 0;
+  if (!track || !viewport) throw new Error("Portfolio: missing elements");
+
+  // --- Infinite loop: clonar slides en ambos extremos ---
+  const originals = Array.from(track.children);
+  const N = originals.length;
+  const CLONES = Math.min(5, N);
+
+  // Añadir clones del final al principio (para ir hacia atrás infinito)
+  for (let i = N - CLONES; i < N; i++) {
+    const clone = originals[i].cloneNode(true);
+    clone.setAttribute("aria-hidden", "true");
+    track.insertBefore(clone, track.firstChild);
+  }
+  // Añadir clones del principio al final (para ir hacia adelante infinito)
+  for (let i = 0; i < CLONES; i++) {
+    const clone = originals[i].cloneNode(true);
+    clone.setAttribute("aria-hidden", "true");
+    track.appendChild(clone);
+  }
+
+  let idx = CLONES; // Arranca en el primer slide real
+  let isAnimating = false;
   let wasDragged = false;
+  let startX = 0;
   let autoplayTimer = null;
-  const AUTOPLAY_DELAY = 4000;
+  const DELAY = 4500;
 
-  // Forzar transición via inline style — no puede ser overrideada por CSS
-  if (track) {
-    track.style.transition = "transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1)";
+  function slideW() {
+    const s = track.firstElementChild;
+    if (!s) return 0;
+    return s.getBoundingClientRect().width + (window.innerWidth < 640 ? 0 : 24);
   }
 
-  function getSlideWidth() {
-    const slide = track?.firstElementChild;
-    if (!slide) return 0;
-    const isMobile = window.innerWidth < 640;
-    const gap = isMobile ? 0 : 24;
-    return slide.getBoundingClientRect().width + gap;
+  function moveTo(i, animate) {
+    track.style.transition = animate
+      ? "transform 0.75s cubic-bezier(0.25, 0.1, 0.25, 1)"
+      : "none";
+    idx = i;
+    track.style.transform = `translateX(-${idx * slideW()}px)`;
   }
 
-  function getMaxIndex() {
-    if (!viewport || !track) return 0;
-    const vw = viewport.getBoundingClientRect().width;
-    const sw = getSlideWidth();
-    if (sw === 0) return 0;
-    const visible = Math.max(1, Math.floor(vw / sw));
-    return Math.max(0, track.children.length - visible);
+  // Posición inicial sin animación
+  moveTo(CLONES, false);
+
+  function afterTransition() {
+    isAnimating = false;
+    // Saltar silenciosamente si estamos en zona de clones
+    if (idx >= N + CLONES) moveTo(CLONES, false);
+    else if (idx < CLONES) moveTo(N + CLONES - 1, false);
   }
 
-  function goTo(index, resetAutoplay = true) {
-    const max = getMaxIndex();
-    currentIndex = Math.max(0, Math.min(index, max));
-    if (track)
-      track.style.transform = `translateX(-${currentIndex * getSlideWidth()}px)`;
-    if (resetAutoplay) startAutoplay();
+  function navigate(dir) {
+    if (isAnimating) return;
+    isAnimating = true;
+    moveTo(idx + dir, true);
+    track.addEventListener("transitionend", afterTransition, { once: true });
   }
 
   function startAutoplay() {
     stopAutoplay();
-    autoplayTimer = setInterval(() => {
-      const next = currentIndex >= getMaxIndex() ? 0 : currentIndex + 1;
-      goTo(next, false);
-    }, AUTOPLAY_DELAY);
+    autoplayTimer = setInterval(() => navigate(1), DELAY);
   }
-
   function stopAutoplay() {
-    if (autoplayTimer) { clearInterval(autoplayTimer); autoplayTimer = null; }
+    clearInterval(autoplayTimer);
+    autoplayTimer = null;
   }
 
-  prevBtn?.addEventListener("click", () => goTo(currentIndex - 1));
-  nextBtn?.addEventListener("click", () => goTo(currentIndex + 1));
+  prevBtn?.addEventListener("click", () => { navigate(-1); startAutoplay(); });
+  nextBtn?.addEventListener("click", () => { navigate(1); startAutoplay(); });
 
-  // Pausa al hover del viewport (desktop)
-  viewport?.addEventListener("mouseenter", stopAutoplay);
-  viewport?.addEventListener("mouseleave", startAutoplay);
+  viewport.addEventListener("mouseenter", stopAutoplay);
+  viewport.addEventListener("mouseleave", startAutoplay);
 
-  let startX = 0;
-
-  viewport?.addEventListener("touchstart", (e) => {
+  viewport.addEventListener("touchstart", (e) => {
     startX = e.touches[0].clientX;
     wasDragged = false;
     stopAutoplay();
   }, { passive: true });
 
-  viewport?.addEventListener("touchmove", (e) => {
+  viewport.addEventListener("touchmove", (e) => {
     if (Math.abs(e.touches[0].clientX - startX) > 10) wasDragged = true;
   }, { passive: true });
 
-  viewport?.addEventListener("touchend", (e) => {
+  viewport.addEventListener("touchend", (e) => {
     const diff = startX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) {
-      diff > 0 ? goTo(currentIndex + 1) : goTo(currentIndex - 1);
-    } else {
-      startAutoplay();
-    }
+    if (Math.abs(diff) > 50) navigate(diff > 0 ? 1 : -1);
+    startAutoplay();
   });
 
   let resizeTimer;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => goTo(currentIndex), 150);
+    resizeTimer = setTimeout(() => moveTo(idx, false), 150);
   });
 
+  // Teclado (flechas)
   document.addEventListener("keydown", (e) => {
     if (!lightbox?.classList.contains("hidden")) return;
-    const section = document.querySelector("#portfolio");
-    if (!section) return;
-    const rect = section.getBoundingClientRect();
-    if (rect.top >= window.innerHeight || rect.bottom <= 0) return;
-    if (e.key === "ArrowLeft") { e.preventDefault(); goTo(currentIndex - 1); }
-    if (e.key === "ArrowRight") { e.preventDefault(); goTo(currentIndex + 1); }
+    const rect = document.querySelector("#portfolio")?.getBoundingClientRect();
+    if (!rect || rect.top >= window.innerHeight || rect.bottom <= 0) return;
+    if (e.key === "ArrowLeft") { e.preventDefault(); navigate(-1); startAutoplay(); }
+    if (e.key === "ArrowRight") { e.preventDefault(); navigate(1); startAutoplay(); }
   });
 
-  document.querySelectorAll("[data-lightbox-trigger]").forEach((trigger) => {
-    trigger.addEventListener("click", () => {
-      if (wasDragged) return;
-      const eid = trigger.getAttribute("data-lightbox-trigger");
-      const ev = allEvents.find((e) => e.id === eid);
-      if (!ev || !lightbox) return;
-      lbImg?.setAttribute("src", ev.imageUrl);
-      lbImg?.setAttribute("alt", `${ev.title} — ${ev.description}`);
-      if (lbTitle) lbTitle.textContent = ev.title;
-      if (lbDesc) lbDesc.textContent = ev.description;
-      if (lbCategory) lbCategory.textContent = ev.category;
-      lightbox.classList.remove("hidden");
-      lightbox.classList.add("flex");
-      document.body.style.overflow = "hidden";
-      stopAutoplay();
-      lbClose?.focus();
-    });
+  // Lightbox — event delegation para que funcione en clones también
+  track.addEventListener("click", (e) => {
+    if (wasDragged) return;
+    const trigger = (e.target).closest("[data-lightbox-trigger]");
+    if (!trigger || !lightbox) return;
+    const eid = trigger.getAttribute("data-lightbox-trigger");
+    const ev = allEvents.find((x) => x.id === eid);
+    if (!ev) return;
+    lbImg?.setAttribute("src", ev.imageUrl);
+    lbImg?.setAttribute("alt", `${ev.title} — ${ev.description}`);
+    if (lbTitle) lbTitle.textContent = ev.title;
+    if (lbDesc) lbDesc.textContent = ev.description;
+    if (lbCategory) lbCategory.textContent = ev.category;
+    lightbox.classList.remove("hidden");
+    lightbox.classList.add("flex");
+    document.body.style.overflow = "hidden";
+    stopAutoplay();
+    lbClose?.focus();
   });
 
   function closeLightbox() {
@@ -434,6 +448,5 @@ const events: PortfolioItem[] = [
       closeLightbox();
   });
 
-  // Arrancar autoplay
   startAutoplay();
 </script>
