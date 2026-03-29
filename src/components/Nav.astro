@@ -12,7 +12,7 @@ const links = [
 ---
 
 <nav
-  class="fixed top-0 left-0 w-full z-90 px-4 sm:px-6 py-3 sm:py-4 transition-all duration-300"
+  class="fixed top-0 left-0 w-full z-90 px-2 sm:px-3 py-2 sm:py-2 transition-all duration-300"
   aria-label="Navegación principal"
   data-nav
 >
@@ -27,7 +27,7 @@ const links = [
         alt="BLS Servicios Audiovisuales"
         width={320}
         height={320}
-        class="h-10 sm:h-12 w-auto object-contain select-none"
+        class="h-24 sm:h-24 w-auto object-contain select-none"
         style="filter: invert(1) brightness(1.8); mix-blend-mode: screen;"
         loading="eager"
         fetchpriority="high"
@@ -43,7 +43,7 @@ const links = [
           links.map(({ href, label }) => (
             <a
               href={href}
-              class="hover:text-neon-blue transition-colors duration-300"
+              class="hover:text-neon-lime transition-colors duration-300"
               role="listitem"
             >
               {label}
