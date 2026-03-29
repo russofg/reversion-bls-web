@@ -103,70 +103,162 @@ const contactInfo = [
           class="p-8 sm:p-10 md:p-16 md:w-7/12 bg-glitch-black"
           data-contact-right
         >
-          <form class="space-y-8 sm:space-y-12" novalidate>
+          <form
+            class="space-y-8 sm:space-y-12"
+            name="contacto"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            data-contact-form
+          >
+            <input type="hidden" name="form-name" value="contacto" />
+            <p class="hidden" aria-hidden="true">
+              <label>No completar: <input name="bot-field" /></label>
+            </p>
+
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12">
               <div>
                 <label
                   for="contact-name"
-                  class="block text-[10px] font-black uppercase tracking-[0.3em] text-neon-lime mb-3 sm:mb-4"
+                  class="block text-[11px] font-black uppercase tracking-[0.3em] text-neon-lime mb-3 sm:mb-4"
                 >
                   Nombre Completo
                 </label>
                 <input
                   id="contact-name"
+                  name="nombre"
                   type="text"
                   required
                   placeholder="Ej. Juan Pérez"
                   autocomplete="name"
                   class="w-full bg-transparent border-b-2 border-white/10 focus:border-neon-lime p-2 transition-all outline-none placeholder:text-white/20 text-white min-h-11"
                 />
+                <span class="text-red-400 text-xs mt-1 hidden" data-error="nombre">Ingresá tu nombre</span>
               </div>
               <div>
                 <label
                   for="contact-email"
-                  class="block text-[10px] font-black uppercase tracking-[0.3em] text-neon-lime mb-3 sm:mb-4"
+                  class="block text-[11px] font-black uppercase tracking-[0.3em] text-neon-lime mb-3 sm:mb-4"
                 >
                   Email
                 </label>
                 <input
                   id="contact-email"
+                  name="email"
                   type="email"
                   required
                   placeholder="juan@ejemplo.com"
                   autocomplete="email"
                   class="w-full bg-transparent border-b-2 border-white/10 focus:border-neon-lime p-2 transition-all outline-none placeholder:text-white/20 text-white min-h-11"
                 />
+                <span class="text-red-400 text-xs mt-1 hidden" data-error="email">Ingresá un email válido</span>
               </div>
             </div>
             <div>
               <label
                 for="contact-message"
-                class="block text-[10px] font-black uppercase tracking-[0.3em] text-neon-lime mb-3 sm:mb-4"
+                class="block text-[11px] font-black uppercase tracking-[0.3em] text-neon-lime mb-3 sm:mb-4"
               >
                 Mensaje
               </label>
               <textarea
                 id="contact-message"
+                name="mensaje"
                 rows="4"
                 required
                 placeholder="Contanos sobre tu evento..."
                 class="w-full bg-transparent border-b-2 border-white/10 focus:border-neon-blue p-2 transition-all outline-none placeholder:text-white/20 text-white resize-none min-h-[120px]"
               ></textarea>
+              <span class="text-red-400 text-xs mt-1 hidden" data-error="mensaje">Escribí tu mensaje</span>
             </div>
             <button
               type="submit"
-              class="w-full py-4 sm:py-6 bg-neon-lime text-black font-headline font-black text-lg sm:text-xl uppercase tracking-[0.2em] hover:scale-[1.02] active:scale-[0.98] transition-all relative overflow-hidden group min-h-14"
+              class="w-full py-4 sm:py-6 bg-neon-lime text-black font-headline font-black text-lg sm:text-xl uppercase tracking-[0.2em] hover:scale-[1.02] active:scale-[0.98] transition-all relative overflow-hidden group min-h-14 disabled:opacity-50 disabled:cursor-not-allowed"
               data-magnetic
+              data-submit-btn
             >
-              <span class="relative z-10">Enviar Mensaje</span>
+              <span class="relative z-10" data-submit-text>Enviar Mensaje</span>
               <div
                 class="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"
               >
               </div>
             </button>
+
+            <!-- Feedback messages -->
+            <div class="hidden text-center py-6 px-4 border border-neon-lime/30 bg-neon-lime/5" data-form-success>
+              <svg class="w-12 h-12 text-neon-lime mx-auto mb-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+              <p class="text-neon-lime font-headline font-black text-lg uppercase tracking-widest">¡Mensaje enviado!</p>
+              <p class="text-white/60 text-sm mt-2">Nos pondremos en contacto pronto.</p>
+            </div>
+
+            <div class="hidden text-center py-6 px-4 border border-red-400/30 bg-red-400/5" data-form-error>
+              <svg class="w-12 h-12 text-red-400 mx-auto mb-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"/></svg>
+              <p class="text-red-400 font-headline font-black text-lg uppercase tracking-widest">Error al enviar</p>
+              <p class="text-white/60 text-sm mt-2">Intentá de nuevo o contactanos por WhatsApp.</p>
+            </div>
           </form>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>("[data-contact-form]");
+  const submitBtn = document.querySelector<HTMLButtonElement>("[data-submit-btn]");
+  const submitText = document.querySelector<HTMLSpanElement>("[data-submit-text]");
+  const successMsg = document.querySelector<HTMLElement>("[data-form-success]");
+  const errorMsg = document.querySelector<HTMLElement>("[data-form-error]");
+
+  function showError(name: string): void {
+    const el = document.querySelector(`[data-error="${name}"]`);
+    el?.classList.remove("hidden");
+    el?.classList.add("block");
+  }
+
+  function clearErrors(): void {
+    document.querySelectorAll("[data-error]").forEach((el) => {
+      el.classList.add("hidden");
+      el.classList.remove("block");
+    });
+  }
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    clearErrors();
+
+    const data = new FormData(form);
+    const nombre = (data.get("nombre") as string)?.trim();
+    const email = (data.get("email") as string)?.trim();
+    const mensaje = (data.get("mensaje") as string)?.trim();
+
+    let valid = true;
+    if (!nombre) { showError("nombre"); valid = false; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError("email"); valid = false; }
+    if (!mensaje) { showError("mensaje"); valid = false; }
+    if (!valid) return;
+
+    if (submitBtn) submitBtn.disabled = true;
+    if (submitText) submitText.textContent = "Enviando...";
+
+    try {
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
+      });
+
+      if (res.ok) {
+        form.classList.add("hidden");
+        successMsg?.classList.remove("hidden");
+      } else {
+        throw new Error("Network error");
+      }
+    } catch {
+      errorMsg?.classList.remove("hidden");
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+      if (submitText) submitText.textContent = "Enviar Mensaje";
+    }
+  });
+</script>

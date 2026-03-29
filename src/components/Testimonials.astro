@@ -1,0 +1,207 @@
+---
+interface Testimonial {
+  name: string;
+  role: string;
+  company: string;
+  text: string;
+  rating: number;
+}
+
+const testimonials: Testimonial[] = [
+  {
+    name: "Mariana López",
+    role: "Directora de Eventos",
+    company: "AWS Argentina",
+    text: "BLS transformó nuestro summit anual en una experiencia inmersiva. La calidad del sonido y las pantallas LED fueron impecables. Sin duda, un equipo de primer nivel.",
+    rating: 5,
+  },
+  {
+    name: "Carlos Gutiérrez",
+    role: "Gerente de Marketing",
+    company: "Fiat Argentina",
+    text: "La presentación del Abarth fue un éxito rotundo gracias al trabajo de BLS. La iluminación y el diseño audiovisual superaron todas nuestras expectativas.",
+    rating: 5,
+  },
+  {
+    name: "Lucía Fernández",
+    role: "Coordinadora de Congresos",
+    company: "Amcham",
+    text: "Llevamos años trabajando con BLS para nuestros foros y siempre nos sorprenden con su profesionalismo, puntualidad y capacidad técnica. Son nuestro partner de confianza.",
+    rating: 5,
+  },
+  {
+    name: "Diego Ramírez",
+    role: "Director Creativo",
+    company: "Alchemy Events",
+    text: "El equipo de BLS entiende la visión creativa y la lleva a otro nivel. La producción que hicieron en el Four Seasons fue extraordinaria.",
+    rating: 5,
+  },
+  {
+    name: "Ana Martínez",
+    role: "Jefa de Comunicación",
+    company: "Holcim LATAM",
+    text: "Coordinaron múltiples sedes simultáneamente con una precisión impresionante. El streaming y el CCTV funcionaron sin un solo fallo. Altamente recomendables.",
+    rating: 5,
+  },
+  {
+    name: "Roberto Sánchez",
+    role: "Director Académico",
+    company: "Universidad Torcuato Di Tella",
+    text: "La producción audiovisual para nuestras charlas y ceremonias siempre es impecable. BLS combina tecnología de punta con un servicio humano excepcional.",
+    rating: 5,
+  },
+];
+---
+
+<section class="relative py-20 sm:py-32 bg-glitch-black overflow-hidden" id="testimonials">
+  <div class="container mx-auto px-5 sm:px-6">
+    <div class="text-center mb-12 sm:mb-16">
+      <p class="text-xs font-black text-neon-lime tracking-ultra uppercase mb-4">
+        Testimonios
+      </p>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-headline font-black tracking-tighter text-white">
+        Lo que dicen<br />nuestros clientes
+      </h2>
+    </div>
+
+    <div class="relative" data-testimonial-carousel>
+      <div class="overflow-hidden" data-testimonial-viewport>
+        <div class="flex gap-6" data-testimonial-track>
+          {testimonials.map((t) => (
+            <article class="shrink-0 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] bg-glitch-black border border-white/8 p-8 sm:p-10 flex flex-col relative group hover:border-white/20 transition-all duration-500">
+              <div class="w-8 h-1 bg-neon-fuchsia mb-6" aria-hidden="true"></div>
+
+              <div class="flex gap-1 mb-5" aria-label={`${t.rating} de 5 estrellas`}>
+                {Array.from({ length: t.rating }).map(() => (
+                  <svg class="w-4 h-4 text-neon-lime" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+
+              <blockquote class="flex-1 mb-8">
+                <p class="text-white/70 text-sm sm:text-base leading-relaxed italic">
+                  "{t.text}"
+                </p>
+              </blockquote>
+
+              <footer class="border-t border-white/8 pt-5">
+                <cite class="not-italic">
+                  <span class="block font-headline font-black text-white text-sm uppercase tracking-widest">
+                    {t.name}
+                  </span>
+                  <span class="block text-neon-blue text-xs mt-1 font-bold">
+                    {t.role} — {t.company}
+                  </span>
+                </cite>
+              </footer>
+
+              <div class="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-neon-fuchsia opacity-0 group-hover:opacity-100 transition-opacity duration-500" aria-hidden="true"></div>
+            </article>
+          ))}
+        </div>
+      </div>
+
+      <!-- Navigation dots -->
+      <div class="flex justify-center gap-3 mt-10" data-testimonial-dots role="tablist" aria-label="Testimonios"></div>
+
+      <!-- Arrows -->
+      <div class="flex justify-center gap-3 mt-6">
+        <button
+          class="w-12 h-12 border border-white/20 flex items-center justify-center text-white/60 hover:border-neon-lime hover:text-neon-lime transition-all"
+          aria-label="Testimonios anteriores"
+          data-testimonial-prev
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+          </svg>
+        </button>
+        <button
+          class="w-12 h-12 border border-white/20 flex items-center justify-center text-white/60 hover:border-neon-lime hover:text-neon-lime transition-all"
+          aria-label="Testimonios siguientes"
+          data-testimonial-next
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const track = document.querySelector<HTMLElement>("[data-testimonial-track]");
+  const viewport = document.querySelector<HTMLElement>("[data-testimonial-viewport]");
+  const dotsContainer = document.querySelector<HTMLElement>("[data-testimonial-dots]");
+  const prevBtn = document.querySelector<HTMLButtonElement>("[data-testimonial-prev]");
+  const nextBtn = document.querySelector<HTMLButtonElement>("[data-testimonial-next]");
+
+  if (!track || !viewport || !dotsContainer) throw new Error("Testimonials: missing elements");
+
+  let page = 0;
+  let autoTimer: ReturnType<typeof setInterval> | null = null;
+
+  function cardsPerView(): number {
+    const w = window.innerWidth;
+    if (w >= 1024) return 3;
+    if (w >= 640) return 2;
+    return 1;
+  }
+
+  function totalPages(): number {
+    return Math.max(1, Math.ceil(track!.children.length / cardsPerView()));
+  }
+
+  function buildDots(): void {
+    dotsContainer!.innerHTML = "";
+    const pages = totalPages();
+    for (let i = 0; i < pages; i++) {
+      const dot = document.createElement("button");
+      dot.className = `w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === page ? "bg-neon-lime w-8" : "bg-white/20 hover:bg-white/40"}`;
+      dot.setAttribute("role", "tab");
+      dot.setAttribute("aria-selected", i === page ? "true" : "false");
+      dot.setAttribute("aria-label", `Página ${i + 1}`);
+      dot.addEventListener("click", () => goToPage(i));
+      dotsContainer!.appendChild(dot);
+    }
+  }
+
+  function goToPage(p: number): void {
+    const pages = totalPages();
+    page = ((p % pages) + pages) % pages;
+    const card = track!.firstElementChild as HTMLElement;
+    if (!card) return;
+    const gap = 24;
+    const cardW = card.getBoundingClientRect().width + gap;
+    const offset = page * cardsPerView() * cardW;
+    track!.style.transition = "transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1)";
+    track!.style.transform = `translateX(-${offset}px)`;
+    buildDots();
+    startAuto();
+  }
+
+  function startAuto(): void {
+    stopAuto();
+    autoTimer = setInterval(() => goToPage(page + 1), 5000);
+  }
+
+  function stopAuto(): void {
+    if (autoTimer) clearInterval(autoTimer);
+    autoTimer = null;
+  }
+
+  prevBtn?.addEventListener("click", () => goToPage(page - 1));
+  nextBtn?.addEventListener("click", () => goToPage(page + 1));
+  viewport?.addEventListener("mouseenter", stopAuto);
+  viewport?.addEventListener("mouseleave", startAuto);
+
+  let resizeTimer: ReturnType<typeof setTimeout>;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => goToPage(Math.min(page, totalPages() - 1)), 150);
+  });
+
+  buildDots();
+  startAuto();
+</script>
