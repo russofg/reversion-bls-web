@@ -64,9 +64,9 @@ const socialLinks = [
         <a
           href="#home"
           class="text-3xl sm:text-4xl font-headline font-black text-neon-lime mb-6 sm:mb-8 tracking-tighter block"
-          aria-label="BLS Audiovisual — Volver al inicio"
+          aria-label="BLS Servicios Audiovisuales — Volver al inicio"
         >
-          BLS <span class="text-neon-blue">AV</span>
+          BLS <span class="text-neon-blue">Servicios Audiovisuales</span>
         </a>
         <p class="text-white/40 text-sm leading-relaxed max-w-xs mb-8">
           Expertos en transformar eventos en experiencias sensoriales únicas a
@@ -177,13 +177,39 @@ const socialLinks = [
       <div
         class="text-[10px] font-black uppercase tracking-ultra text-white/20 text-center sm:text-left"
       >
-        &copy; {new Date().getFullYear()} BLS Audiovisual. Todos los derechos reservados.
+        &copy; {new Date().getFullYear()} BLS Servicios Audiovisuales. Todos los derechos
+        reservados.
       </div>
       <div
-        class="text-[10px] font-black uppercase tracking-ultra text-white/10"
+        class="text-[10px] font-black uppercase tracking-ultra text-white/30 flex items-center gap-1"
       >
-        Soluciones Audiovisuales Profesionales
+        Hecho con <span class="heart-beat text-white/30">♥</span> por MateCode
       </div>
+
+      <style>
+        .heart-beat {
+          display: inline-block;
+          animation: heartbeat 1.2s ease-in-out infinite;
+        }
+        @keyframes heartbeat {
+          0%,
+          100% {
+            transform: scale(1);
+          }
+          14% {
+            transform: scale(1.35);
+          }
+          28% {
+            transform: scale(1);
+          }
+          42% {
+            transform: scale(1.25);
+          }
+          56% {
+            transform: scale(1);
+          }
+        }
+      </style>
     </div>
   </div>
 </footer>
