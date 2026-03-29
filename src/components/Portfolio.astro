@@ -192,18 +192,18 @@ const events: PortfolioItem[] = [
     </div>
 
     <div
-      class="overflow-hidden -mx-5 sm:-mx-6 px-5 sm:px-6"
+      class="overflow-hidden -mx-5 sm:-mx-6 px-0 sm:px-6"
       data-carousel-viewport
     >
       <div
-        class="flex gap-4 sm:gap-6 transition-transform duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)]"
+        class="flex gap-0 sm:gap-6"
         data-carousel-track
         role="list"
       >
         {
           events.map((event) => (
             <article
-              class="group relative shrink-0 w-[80vw] sm:w-[55vw] md:w-[38vw] lg:w-[28vw] cursor-pointer"
+              class="group relative shrink-0 w-full sm:w-[55vw] md:w-[38vw] lg:w-[28vw] cursor-pointer"
               data-portfolio-item
               data-lightbox-trigger={event.id}
               role="listitem"
@@ -310,11 +310,19 @@ const events: PortfolioItem[] = [
 
   let currentIndex = 0;
   let wasDragged = false;
+  let autoplayTimer = null;
+  const AUTOPLAY_DELAY = 4000;
+
+  // Forzar transición via inline style — no puede ser overrideada por CSS
+  if (track) {
+    track.style.transition = "transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1)";
+  }
 
   function getSlideWidth() {
     const slide = track?.firstElementChild;
     if (!slide) return 0;
-    const gap = window.innerWidth < 640 ? 16 : 24;
+    const isMobile = window.innerWidth < 640;
+    const gap = isMobile ? 0 : 24;
     return slide.getBoundingClientRect().width + gap;
   }
 
@@ -327,38 +335,51 @@ const events: PortfolioItem[] = [
     return Math.max(0, track.children.length - visible);
   }
 
-  function goTo(index) {
-    currentIndex = Math.max(0, Math.min(index, getMaxIndex()));
+  function goTo(index, resetAutoplay = true) {
+    const max = getMaxIndex();
+    currentIndex = Math.max(0, Math.min(index, max));
     if (track)
       track.style.transform = `translateX(-${currentIndex * getSlideWidth()}px)`;
+    if (resetAutoplay) startAutoplay();
+  }
+
+  function startAutoplay() {
+    stopAutoplay();
+    autoplayTimer = setInterval(() => {
+      const next = currentIndex >= getMaxIndex() ? 0 : currentIndex + 1;
+      goTo(next, false);
+    }, AUTOPLAY_DELAY);
+  }
+
+  function stopAutoplay() {
+    if (autoplayTimer) { clearInterval(autoplayTimer); autoplayTimer = null; }
   }
 
   prevBtn?.addEventListener("click", () => goTo(currentIndex - 1));
   nextBtn?.addEventListener("click", () => goTo(currentIndex + 1));
 
+  // Pausa al hover del viewport (desktop)
+  viewport?.addEventListener("mouseenter", stopAutoplay);
+  viewport?.addEventListener("mouseleave", startAutoplay);
+
   let startX = 0;
 
-  viewport?.addEventListener(
-    "touchstart",
-    (e) => {
-      startX = e.touches[0].clientX;
-      wasDragged = false;
-    },
-    { passive: true },
-  );
+  viewport?.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+    wasDragged = false;
+    stopAutoplay();
+  }, { passive: true });
 
-  viewport?.addEventListener(
-    "touchmove",
-    (e) => {
-      if (Math.abs(e.touches[0].clientX - startX) > 10) wasDragged = true;
-    },
-    { passive: true },
-  );
+  viewport?.addEventListener("touchmove", (e) => {
+    if (Math.abs(e.touches[0].clientX - startX) > 10) wasDragged = true;
+  }, { passive: true });
 
   viewport?.addEventListener("touchend", (e) => {
     const diff = startX - e.changedTouches[0].clientX;
     if (Math.abs(diff) > 50) {
       diff > 0 ? goTo(currentIndex + 1) : goTo(currentIndex - 1);
+    } else {
+      startAutoplay();
     }
   });
 
@@ -374,14 +395,8 @@ const events: PortfolioItem[] = [
     if (!section) return;
     const rect = section.getBoundingClientRect();
     if (rect.top >= window.innerHeight || rect.bottom <= 0) return;
-    if (e.key === "ArrowLeft") {
-      e.preventDefault();
-      goTo(currentIndex - 1);
-    }
-    if (e.key === "ArrowRight") {
-      e.preventDefault();
-      goTo(currentIndex + 1);
-    }
+    if (e.key === "ArrowLeft") { e.preventDefault(); goTo(currentIndex - 1); }
+    if (e.key === "ArrowRight") { e.preventDefault(); goTo(currentIndex + 1); }
   });
 
   document.querySelectorAll("[data-lightbox-trigger]").forEach((trigger) => {
@@ -398,6 +413,7 @@ const events: PortfolioItem[] = [
       lightbox.classList.remove("hidden");
       lightbox.classList.add("flex");
       document.body.style.overflow = "hidden";
+      stopAutoplay();
       lbClose?.focus();
     });
   });
@@ -406,6 +422,7 @@ const events: PortfolioItem[] = [
     lightbox?.classList.add("hidden");
     lightbox?.classList.remove("flex");
     document.body.style.overflow = "";
+    startAutoplay();
   }
 
   lbClose?.addEventListener("click", closeLightbox);
@@ -416,4 +433,7 @@ const events: PortfolioItem[] = [
     if (e.key === "Escape" && !lightbox?.classList.contains("hidden"))
       closeLightbox();
   });
+
+  // Arrancar autoplay
+  startAutoplay();
 </script>
