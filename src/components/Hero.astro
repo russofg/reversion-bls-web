@@ -1,0 +1,95 @@
+---
+import { Image } from "astro:assets";
+import heroBg from "@/assets/images/hero-background.webp";
+---
+
+<header class="relative min-h-svh flex items-center overflow-hidden" id="home">
+  <div class="absolute inset-0 z-0" data-parallax-bg>
+    <Image
+      src={heroBg}
+      alt="Producción audiovisual profesional en evento de gran formato con iluminación escénica y pantallas LED"
+      class="w-full h-full object-cover scale-110 opacity-40 grayscale contrast-125"
+      widths={[640, 1024, 1536, 2048]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      quality={75}
+    />
+    <div
+      class="absolute inset-0 bg-linear-to-br from-glitch-black via-transparent to-glitch-black opacity-80"
+    ></div>
+    <div
+      class="absolute top-1/4 -right-20 w-64 sm:w-96 h-64 sm:h-96 bg-neon-blue/20 float-blob"
+      data-blob
+    ></div>
+    <div
+      class="absolute bottom-1/4 -left-20 w-64 sm:w-96 h-64 sm:h-96 bg-neon-fuchsia/20 float-blob"
+      data-blob
+      style="animation-delay: -6s"
+    ></div>
+  </div>
+
+  <div class="container mx-auto px-5 sm:px-6 z-10 w-full">
+    <div class="pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 max-w-6xl">
+
+      <span
+        class="inline-block px-3 py-1 mb-6 sm:mb-8 bg-neon-fuchsia text-white text-[10px] font-black uppercase tracking-[0.5em] -rotate-1"
+        data-hero-badge
+      >
+        Producción de Elite
+      </span>
+
+      <h1
+        class="font-headline font-black tracking-tighter leading-[0.88] uppercase text-white mb-8 sm:mb-10"
+        data-hero-headline
+        style="font-size: clamp(3rem, 14vw, 11rem);"
+      >
+        Soluciones<br />
+        <span class="text-neon-blue italic">técnicas</span><br />
+        <span class="text-neon-lime">profesionales</span>
+      </h1>
+
+      <div class="flex flex-col sm:flex-row sm:items-start gap-8 sm:gap-12 max-w-3xl" data-hero-desc>
+        <div class="w-1 bg-neon-blue self-stretch hidden sm:block shrink-0"></div>
+
+        <div>
+          <p class="text-base sm:text-xl md:text-2xl text-white/80 font-light leading-snug mb-8 sm:mb-10 pl-4 sm:pl-0 border-l-2 sm:border-l-0 border-neon-blue">
+            Transformamos visiones en realidades sensoriales. Audio,
+            iluminación y video con tecnología de vanguardia para eventos
+            corporativos y masivos.
+          </p>
+
+          <div class="flex flex-row items-center gap-4 pl-4 sm:pl-0" data-hero-ctas>
+
+            <a
+              href="#contact"
+              class="px-6 sm:px-8 py-3 sm:py-4 bg-neon-lime text-black font-black uppercase text-xs sm:text-sm tracking-widest hover:bg-white transition-all duration-300"
+              data-magnetic
+            >
+              Cotizá Ahora
+            </a>
+
+            <a
+              href="#portfolio"
+              class="px-6 sm:px-8 py-3 sm:py-4 border-2 border-neon-lime text-neon-lime font-black uppercase text-xs sm:text-sm tracking-widest flex items-center gap-2 hover:bg-neon-lime hover:text-black transition-all duration-300"
+              data-magnetic
+            >
+              Ver Portfolio
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              ><path d="M7 17 17 7M7 7h10v10"></path></svg>
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</header>
+

@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+@theme {
+  --color-glitch-black: #020408;
+  --color-neon-blue: #00f3ff;
+  --color-neon-fuchsia: #ff00ff;
+  --color-neon-lime: #ccff00;
+  --color-surface-lowest: #050505;
+
+  --font-headline: "Jost Variable", "Jost", sans-serif;
+  --font-body: "Cabin Variable", "Cabin", sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: auto;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--color-glitch-black);
+    color: #fff;
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: var(--color-neon-fuchsia);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-neon-blue);
+    outline-offset: 2px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@layer components {
+  .glitch-border {
+    border: 1px solid oklch(from var(--color-neon-blue) l c h / 0.3);
+    box-shadow:
+      -2px 0 0 oklch(from var(--color-neon-fuchsia) l c h / 0.5),
+      2px 0 0 oklch(from var(--color-neon-lime) l c h / 0.5);
+  }
+
+  .text-shadow-neon {
+    text-shadow:
+      2px 2px 0 var(--color-neon-fuchsia),
+      -2px -2px 0 var(--color-neon-blue);
+  }
+
+  .noise-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .float-blob {
+    filter: blur(80px);
+    border-radius: 9999px;
+    will-change: transform;
+    animation: blob-drift 12s ease-in-out infinite alternate;
+  }
+
+  .bg-gradient-glitch {
+    background: linear-gradient(
+      45deg,
+      oklch(from var(--color-glitch-black) l c h / 0.9) 0%,
+      oklch(from var(--color-neon-blue) l c h / 0.1) 100%
+    );
+  }
+}
+
+@layer utilities {
+  .tracking-ultra {
+    letter-spacing: 0.4em;
+  }
+
+  .leading-compressed {
+    line-height: 0.85;
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  .safe-top {
+    padding-top: env(safe-area-inset-top, 0);
+  }
+}
+
+@keyframes blob-drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(30px, -20px) scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

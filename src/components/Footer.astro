@@ -1,0 +1,189 @@
+---
+import {
+  instagramIcon,
+  linkedinIcon,
+  facebookIcon,
+  whatsappIcon,
+} from "@/utils/icons";
+
+const navLinks = [
+  { href: "#home", label: "Inicio" },
+  { href: "#about", label: "Nosotros" },
+  { href: "#services", label: "Servicios" },
+  { href: "#portfolio", label: "Portfolio" },
+  { href: "#contact", label: "Contacto" },
+];
+
+const serviceLinks = [
+  "Soporte Técnico",
+  "Iluminación Escénica",
+  "Diseño Web",
+  "CCTV",
+  "Pantallas LED",
+  "Streaming Profesional",
+  "Sonido de alto Impacto",
+];
+
+const socialLinks = [
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/blsnet.com.ar/",
+    icon: instagramIcon,
+    color: "hover:text-neon-fuchsia hover:border-neon-fuchsia",
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/blsnet.com.ar/",
+    icon: facebookIcon,
+    color: "hover:text-neon-blue hover:border-neon-blue",
+  },
+  {
+    label: "WhatsApp",
+    href: "https://wa.me/541151834646?text=Hola%20BLS%2C%20me%20gustaría%20consultar%20sobre%20sus%20servicios%20audiovisuales.",
+    icon: whatsappIcon,
+    color: "hover:text-neon-lime hover:border-neon-lime",
+  },
+];
+---
+
+<footer
+  class="bg-glitch-black border-t border-white/5 py-16 sm:py-24 overflow-hidden relative"
+>
+  <div
+    class="absolute bottom-0 right-0 text-[8rem] sm:text-[10rem] md:text-[15rem] font-black text-white/2 leading-none select-none pointer-events-none"
+    aria-hidden="true"
+  >
+    BLS
+  </div>
+
+  <div class="container mx-auto px-5 sm:px-6 max-w-7xl relative z-10">
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 sm:gap-12 md:gap-16 mb-16 sm:mb-24"
+    >
+      <div>
+        <a
+          href="#home"
+          class="text-3xl sm:text-4xl font-headline font-black text-neon-lime mb-6 sm:mb-8 tracking-tighter block"
+          aria-label="BLS Audiovisual — Volver al inicio"
+        >
+          BLS <span class="text-neon-blue">AV</span>
+        </a>
+        <p class="text-white/40 text-sm leading-relaxed max-w-xs mb-8">
+          Expertos en transformar eventos en experiencias sensoriales únicas a
+          través de la tecnología y el diseño audiovisual.
+        </p>
+        <!-- Redes sociales -->
+        <div class="flex items-center gap-3">
+          {
+            socialLinks.map(({ label, href, icon, color }) => (
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                class:list={[
+                  "w-9 h-9 flex items-center justify-center border border-white/10 text-white/30 transition-all duration-300",
+                  color,
+                ]}
+              >
+                <Fragment set:html={icon} />
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      <nav aria-label="Navegación del footer">
+        <h3
+          class="font-black text-neon-lime mb-6 sm:mb-8 uppercase tracking-ultra text-[10px]"
+        >
+          Navegación
+        </h3>
+        <ul class="space-y-3">
+          {
+            navLinks.map(({ href, label }) => (
+              <li>
+                <a
+                  href={href}
+                  class="text-white/40 hover:text-neon-blue transition-colors text-sm font-bold uppercase tracking-widest"
+                >
+                  {label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div>
+        <h3
+          class="font-black text-neon-blue mb-6 sm:mb-8 uppercase tracking-ultra text-[10px]"
+        >
+          Servicios
+        </h3>
+        <ul class="space-y-3">
+          {
+            serviceLinks.map((label) => (
+              <li>
+                <span class="text-white/40 text-sm uppercase font-bold tracking-widest">
+                  {label}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h3
+          class="font-black text-neon-fuchsia mb-6 sm:mb-8 uppercase tracking-ultra text-[10px]"
+        >
+          Contacto
+        </h3>
+        <ul class="space-y-3">
+          <li>
+            <a
+              href="mailto:info@blsnet.com.ar"
+              class="text-white/40 hover:text-neon-blue transition-colors text-sm font-bold tracking-widest"
+            >
+              info@blsnet.com.ar
+            </a>
+          </li>
+          <li>
+            <a
+              href="tel:+541151834646"
+              class="text-white/40 hover:text-neon-blue transition-colors text-sm font-bold tracking-widest"
+            >
+              +54 11 5183-4646
+            </a>
+          </li>
+          <li>
+            <span class="text-white/40 text-sm font-bold tracking-widest block">
+              Catamarca 809, CABA
+            </span>
+          </li>
+          <li>
+            <span class="text-white/40 text-sm font-bold tracking-widest block">
+              Lun–Vie 9:00–17:00
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="pt-8 sm:pt-12 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4"
+    >
+      <div
+        class="text-[10px] font-black uppercase tracking-ultra text-white/20 text-center sm:text-left"
+      >
+        &copy; {new Date().getFullYear()} BLS Audiovisual. Todos los derechos reservados.
+      </div>
+      <div
+        class="text-[10px] font-black uppercase tracking-ultra text-white/10"
+      >
+        Soluciones Audiovisuales Profesionales
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,100 @@
+---
+const clients = [
+  { name: "Amcham Argentina", file: "amcham_argentina.webp" },
+  { name: "Ants Planners", file: "ants_planners_logo.webp" },
+  { name: "BAM", file: "bam.webp" },
+  { name: "CAC", file: "cac.webp" },
+  { name: "Central de Eventos", file: "central-de-eventos.webp" },
+  { name: "CICYP", file: "cicyp.webp" },
+  { name: "CYC", file: "cyc_logo.webp" },
+  { name: "Énfasis", file: "enfasis.webp" },
+  { name: "Furlong Fox", file: "furlong_fox.webp" },
+  { name: "InvGate", file: "invgate.webp" },
+  { name: "Jauja", file: "jauja.webp" },
+  { name: "Linked", file: "linked_logo_negro.webp" },
+  { name: "Área", file: "logo_area.webp" },
+  { name: "BAM Group", file: "logo_bam.webp" },
+  { name: "Inmental", file: "logo_inmental.webp" },
+  { name: "Marcos", file: "logo_marcos.webp" },
+  { name: "Marlon", file: "marlon_logo.webp" },
+  { name: "MCI Argentina", file: "mci_argentina.webp" },
+  { name: "Mondelo", file: "mondelo.webp" },
+  { name: "PMB", file: "pmb.webp" },
+  { name: "Rubra", file: "rubra.webp" },
+];
+---
+
+<section
+  class="relative py-16 sm:py-20 bg-glitch-black border-y border-white/5 overflow-hidden"
+  aria-label="Clientes que confían en BLS Audiovisual"
+>
+  <div class="container mx-auto px-5 sm:px-6 mb-10 sm:mb-12">
+    <h2
+      class="text-xs font-black text-neon-lime tracking-ultra uppercase text-center"
+    >
+      Confían en nosotros
+    </h2>
+  </div>
+
+  <div class="relative">
+    <div
+      class="absolute left-0 top-0 bottom-0 w-16 sm:w-24 md:w-40 bg-linear-to-r from-glitch-black to-transparent z-10 pointer-events-none"
+    >
+    </div>
+    <div
+      class="absolute right-0 top-0 bottom-0 w-16 sm:w-24 md:w-40 bg-linear-to-l from-glitch-black to-transparent z-10 pointer-events-none"
+    >
+    </div>
+
+    <div id="client-track" class="flex items-start" data-client-track>
+      {
+        [...clients, ...clients].map(({ name, file }) => (
+          <div class="shrink-0 mx-5 sm:mx-7 flex flex-col items-center gap-3 opacity-60 hover:opacity-100 transition-opacity duration-400">
+            <div class="w-24 h-24 sm:w-28 sm:h-28 bg-white rounded-xl flex items-center justify-center p-4 shadow-lg shadow-white/5">
+              <img
+                src={`/clients/${file}`}
+                alt={`Logo de ${name}`}
+                class="max-w-full max-h-full object-contain"
+                loading="lazy"
+                decoding="async"
+                width="96"
+                height="96"
+              />
+            </div>
+            <span class="text-[10px] sm:text-xs text-white/40 font-bold uppercase tracking-widest text-center whitespace-nowrap">
+              {name}
+            </span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  const track = document.getElementById("client-track");
+  if (track) {
+    let pos = 0;
+    const totalWidth = track.scrollWidth / 2;
+    const speed = 0.5;
+    let paused = false;
+
+    function animate(): void {
+      if (!paused) {
+        pos -= speed;
+        if (Math.abs(pos) >= totalWidth) pos = 0;
+        track!.style.transform = `translateX(${pos}px)`;
+      }
+      requestAnimationFrame(animate);
+    }
+
+    track.addEventListener("mouseenter", () => {
+      paused = true;
+    });
+    track.addEventListener("mouseleave", () => {
+      paused = false;
+    });
+
+    requestAnimationFrame(animate);
+  }
+</script>

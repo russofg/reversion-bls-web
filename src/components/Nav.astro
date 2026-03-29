@@ -1,0 +1,172 @@
+---
+const links = [
+  { href: "#home", label: "Inicio" },
+  { href: "#about", label: "Nosotros" },
+  { href: "#services", label: "Servicios" },
+  { href: "#portfolio", label: "Portfolio" },
+  { href: "#contact", label: "Contacto" },
+];
+---
+
+<nav
+  class="fixed top-0 left-0 w-full z-90 p-4 sm:p-6 mix-blend-difference"
+  aria-label="Navegación principal"
+>
+  <div class="flex justify-between items-center">
+    <a
+      href="#home"
+      class="text-3xl sm:text-4xl font-headline font-black tracking-tighter text-neon-lime border-l-4 border-neon-fuchsia pl-3 sm:pl-4 leading-tight"
+      aria-label="BLS Audiovisual — Inicio"
+    >
+      BLS<br /><span class="text-neon-blue">Audiovisual</span>
+    </a>
+
+    <div class="flex items-center gap-4 sm:gap-6">
+      <div
+        class="hidden md:flex items-center gap-5 lg:gap-7 text-xs font-black uppercase tracking-[0.2em] bg-black/40 px-4 py-2.5 backdrop-blur-md"
+        role="list"
+      >
+        {
+          links.map(({ href, label }) => (
+            <a
+              href={href}
+              class="hover:text-neon-blue transition-colors duration-300"
+              role="listitem"
+            >
+              {label}
+            </a>
+          ))
+        }
+      </div>
+      <a
+        href="#contact"
+        class="hidden sm:inline-block bg-neon-lime text-glitch-black px-5 sm:px-6 py-2.5 font-headline font-black text-xs uppercase tracking-tighter hover:bg-neon-blue hover:text-white transition-all -skew-x-12"
+        data-magnetic
+      >
+        Cotizá
+      </a>
+
+      <button
+        class="md:hidden flex flex-col gap-1.5 p-2 min-h-11 min-w-11 items-center justify-center"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-mobile-toggle
+      >
+        <span class="block w-6 h-0.5 bg-white"></span>
+        <span class="block w-4 h-0.5 bg-neon-lime"></span>
+        <span class="block w-6 h-0.5 bg-white"></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Menú mobile FUERA del nav para evitar herencia de mix-blend-difference -->
+<div
+  id="mobile-menu"
+  class="hidden fixed inset-0 z-200 flex-col items-center justify-center gap-6"
+  data-mobile-menu
+  role="dialog"
+  aria-modal="true"
+  aria-label="Menú de navegación"
+  style="mix-blend-mode: normal;"
+>
+  <!-- Fondo glass sólido -->
+  <div
+    class="absolute inset-0"
+    style="background: rgba(2,4,8,0.88); backdrop-filter: blur(24px) saturate(1.4); -webkit-backdrop-filter: blur(24px) saturate(1.4);"
+    aria-hidden="true"
+  ></div>
+  <!-- Línea superior neon-lime -->
+  <div
+    class="absolute top-0 left-0 right-0 h-px"
+    style="background: linear-gradient(to right, transparent, #ccff00, transparent); opacity: 0.7;"
+    aria-hidden="true"
+  ></div>
+  <!-- Línea inferior neon-fuchsia -->
+  <div
+    class="absolute bottom-0 left-0 right-0 h-px"
+    style="background: linear-gradient(to right, transparent, #ff00ff, transparent); opacity: 0.5;"
+    aria-hidden="true"
+  ></div>
+  <!-- Blob decorativo verde -->
+  <div
+    class="absolute top-1/3 right-1/4 w-56 h-56 rounded-full pointer-events-none"
+    style="background: rgba(204,255,0,0.08); filter: blur(60px);"
+    aria-hidden="true"
+  ></div>
+  <!-- Blob decorativo fucsia -->
+  <div
+    class="absolute bottom-1/3 left-1/4 w-44 h-44 rounded-full pointer-events-none"
+    style="background: rgba(255,0,255,0.08); filter: blur(60px);"
+    aria-hidden="true"
+  ></div>
+
+  <!-- Botón cerrar -->
+  <button
+    class="absolute top-5 right-5 w-11 h-11 flex items-center justify-center text-2xl text-white/60 hover:text-neon-lime border border-white/10 hover:border-neon-lime transition-all z-10"
+    aria-label="Cerrar menú"
+    data-mobile-close
+  >
+    &times;
+  </button>
+
+  <!-- Links -->
+  <div class="relative z-10 flex flex-col items-center gap-6">
+    {
+      links.map(({ href, label }) => (
+        <a
+          href={href}
+          class="text-3xl sm:text-4xl font-headline font-black uppercase tracking-widest text-white hover:text-neon-lime transition-colors duration-300"
+          data-mobile-link
+        >
+          {label}
+        </a>
+      ))
+    }
+    <a
+      href="#contact"
+      class="mt-4 px-10 py-4 bg-neon-lime text-black font-headline font-black uppercase tracking-widest text-sm hover:bg-white transition-all"
+      data-mobile-link
+    >
+      Cotizá Ahora
+    </a>
+  </div>
+</div>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>(
+    "[data-mobile-toggle]",
+  );
+  const menu = document.querySelector<HTMLElement>("[data-mobile-menu]");
+  const closeBtn = document.querySelector<HTMLButtonElement>(
+    "[data-mobile-close]",
+  );
+  const mobileLinks = document.querySelectorAll("[data-mobile-link]");
+
+  function openMenu(): void {
+    menu?.classList.remove("hidden");
+    menu?.classList.add("flex");
+    toggle?.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden";
+    closeBtn?.focus();
+  }
+
+  function closeMenu(): void {
+    menu?.classList.add("hidden");
+    menu?.classList.remove("flex");
+    toggle?.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+    toggle?.focus();
+  }
+
+  toggle?.addEventListener("click", openMenu);
+  closeBtn?.addEventListener("click", closeMenu);
+  mobileLinks.forEach((l) => l.addEventListener("click", closeMenu));
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !menu?.classList.contains("hidden")) {
+      closeMenu();
+    }
+  });
+</script>

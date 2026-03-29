@@ -1,0 +1,27 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Nav from "@/components/Nav.astro";
+import Hero from "@/components/Hero.astro";
+import About from "@/components/About.astro";
+import Services from "@/components/Services.astro";
+import Portfolio from "@/components/Portfolio.astro";
+import Clients from "@/components/Clients.astro";
+import Contact from "@/components/Contact.astro";
+import Footer from "@/components/Footer.astro";
+---
+
+<Layout
+  title="BLS Audiovisual | Soluciones Técnicas Profesionales"
+  description="Transformamos visiones en realidades sensoriales. Audio, iluminación y video con tecnología de vanguardia para eventos corporativos y masivos."
+>
+  <Nav />
+  <main id="main-content">
+    <Hero />
+    <About />
+    <Services />
+    <Portfolio />
+    <Clients />
+    <Contact />
+  </main>
+  <Footer />
+</Layout>

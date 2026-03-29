@@ -1,0 +1,131 @@
+---
+import { Image } from "astro:assets";
+import servicesBg from "@/assets/images/services-bg.jpg";
+
+const services = [
+  {
+    num: "01",
+    icon: `<svg class="w-10 h-10 sm:w-12 sm:h-12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"/></svg>`,
+    title: "Sonido Profesional",
+    description:
+      "Sistemas de line array de última generación y microfonía premium para garantizar una claridad acústica inigualable en cada evento.",
+    tags: ["CONCIERTOS", "CORPORATIVO"],
+    color: "neon-blue",
+    bg: "bg-glitch-black/40",
+    hoverBg: "hover:bg-neon-blue",
+    offset: "",
+  },
+  {
+    num: "02",
+    icon: `<svg class="w-10 h-10 sm:w-12 sm:h-12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"/></svg>`,
+    title: "Iluminación",
+    description:
+      "Diseño de ambientes y efectos espectaculares con cabezas móviles y tecnología LED controlada por expertos.",
+    tags: ["ATMÓSFERAS", "ROBÓTICA"],
+    color: "neon-fuchsia",
+    bg: "bg-glitch-black/60",
+    hoverBg: "hover:bg-neon-fuchsia",
+    offset: "md:-translate-y-12",
+  },
+  {
+    num: "03",
+    icon: `<svg class="w-10 h-10 sm:w-12 sm:h-12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z"/></svg>`,
+    title: "Video y Proyección",
+    description:
+      "Pantallas LED de alta resolución, mapping y streaming profesional con switchers de nivel broadcast.",
+    tags: ["LED WALLS", "STREAMING"],
+    color: "neon-lime",
+    bg: "bg-glitch-black/40",
+    hoverBg: "hover:bg-neon-lime",
+    offset: "",
+  },
+];
+---
+
+<section
+  class="relative py-20 sm:py-32 bg-glitch-black overflow-hidden"
+  id="services"
+>
+  <div class="absolute inset-0">
+    <Image
+      src={servicesBg}
+      alt=""
+      role="presentation"
+      class="w-full h-full object-cover opacity-10"
+      widths={[640, 1024, 1536]}
+      sizes="100vw"
+      loading="lazy"
+      quality={50}
+    />
+  </div>
+
+  <div class="container mx-auto px-5 sm:px-6 relative z-10">
+    <div
+      class="mb-16 sm:mb-24 flex flex-col md:flex-row items-start md:items-end justify-between gap-6"
+    >
+      <div>
+        <p
+          class="text-xs font-black text-neon-fuchsia tracking-ultra uppercase mb-4"
+        >
+          Servicios Especializados
+        </p>
+        <h2
+          class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[7rem] font-headline font-black tracking-tighter leading-none text-white"
+        >
+          Potencia<br />visual &amp; sonora
+        </h2>
+      </div>
+      <div class="hidden md:block w-48 h-1 bg-neon-blue"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-0">
+      {
+        services.map(
+          ({ num, icon, title, description, tags, color, bg, hoverBg, offset }, i) => (
+            <article
+              class:list={[
+                "relative group p-6 sm:p-8 md:p-12 backdrop-blur-sm transition-all duration-500 overflow-hidden",
+                "md:border-l border-white/5",
+                i > 0 && "border-t md:border-t-0",
+                bg,
+                hoverBg,
+                offset,
+              ]}
+              data-service-card
+            >
+              <div
+                class:list={[
+                  "absolute top-0 right-0 p-4 opacity-40 text-6xl sm:text-7xl md:text-8xl font-black group-hover:text-black transition-colors",
+                  `text-${color}`,
+                ]}
+              >
+                {num}
+              </div>
+              <div
+                class:list={[
+                  `text-${color}`,
+                  "group-hover:text-black mb-8 sm:mb-12 transition-colors",
+                ]}
+              >
+                <Fragment set:html={icon} />
+              </div>
+              <h3 class="text-2xl sm:text-3xl md:text-4xl font-headline font-black mb-6 sm:mb-8 group-hover:text-black uppercase transition-colors">
+                {title}
+              </h3>
+              <p class="text-white/60 group-hover:text-black/80 text-base sm:text-lg leading-snug mb-8 sm:mb-12 transition-colors">
+                {description}
+              </p>
+              <div class="flex flex-wrap gap-2 opacity-50 group-hover:opacity-100 transition-opacity">
+                {tags.map((tag) => (
+                  <span class="text-[10px] font-black px-2 py-1 border border-current">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </article>
+          ),
+        )
+      }
+    </div>
+  </div>
+</section>

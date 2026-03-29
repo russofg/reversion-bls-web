@@ -1,0 +1,211 @@
+---
+import { Image } from "astro:assets";
+import aboutTeam from "@/assets/images/about-image.webp";
+
+const stats = [
+  {
+    value: 2250,
+    suffix: "+",
+    label: "Eventos Realizados",
+    color: "text-neon-blue",
+    border: "border-neon-blue",
+  },
+  {
+    value: 20,
+    suffix: "+",
+    label: "Profesionales",
+    color: "text-neon-fuchsia",
+    border: "border-neon-fuchsia",
+  },
+  {
+    value: 98,
+    suffix: "%",
+    label: "Satisfacción",
+    color: "text-neon-lime",
+    border: "border-neon-lime",
+  },
+  {
+    value: 25,
+    suffix: "+",
+    label: "Años Exp.",
+    color: "text-white",
+    border: "border-white",
+  },
+];
+
+const pillars = [
+  {
+    label: "Quiénes Somos",
+    color: "neon-blue",
+    text: "BLS Servicios Audiovisuales es una empresa dedicada a prestar servicios audiovisuales en eventos corporativos y sociales, con una amplia gama de tecnología para satisfacer las necesidades de cada cliente — desde un pequeño evento interno hasta un congreso internacional.",
+  },
+  {
+    label: "Nuestra Misión",
+    color: "neon-fuchsia",
+    text: "Ser el enlace entre lo que una empresa quiere comunicar y el público al cual está dirigido. Esa comunicación es cada vez más eficiente gracias al continuo cambio al que BLS se adapta, respondiendo siempre con la más avanzada tecnología.",
+  },
+  {
+    label: "Nuestra Visión",
+    color: "neon-lime",
+    text: "Ser la empresa en la cual cada persona que la integra esté dispuesta a dar siempre lo mejor de sí, para con BLS y para con el cliente — satisfaciéndolo desde el inicio del proceso, entendiendo sus necesidades.",
+  },
+];
+
+const timeline = [
+  {
+    num: "01",
+    title: "Fundación",
+    color: "text-neon-blue",
+    text: "Iniciamos operaciones con un enfoque en audio de alta fidelidad para conferencias exclusivas.",
+  },
+  {
+    num: "02",
+    title: "Expansión Nacional",
+    color: "text-neon-fuchsia",
+    text: "Integramos iluminación robótica, cámaras PTZ 4K y pantallas LED de gran formato a nuestro inventario.",
+  },
+  {
+    num: "03",
+    title: "Liderazgo Digital",
+    color: "text-neon-lime",
+    text: "Hoy somos referentes en producciones híbridas y streaming de alta gama.",
+  },
+];
+---
+
+<section class="relative py-20 sm:py-32 overflow-hidden" id="about">
+  <div
+    class="absolute top-0 right-0 w-1/3 h-full opacity-30 mix-blend-screen hidden md:block"
+  >
+    <Image
+      src={aboutTeam}
+      alt="Equipo técnico profesional de BLS Audiovisual preparando equipamiento para evento corporativo"
+      class="w-full h-full object-cover"
+      widths={[480, 768]}
+      sizes="33vw"
+      loading="lazy"
+      quality={70}
+    />
+  </div>
+
+  <div class="container mx-auto px-5 sm:px-6 relative z-10 space-y-12 sm:space-y-16">
+
+    <!-- Fila 1: panel principal + timeline -->
+    <div class="grid grid-cols-12 gap-6">
+      <div
+        class="col-span-12 md:col-span-7 bg-glitch-black/80 backdrop-blur-xl p-6 sm:p-8 md:p-12 glitch-border"
+        data-about-panel
+      >
+        <p class="text-xs font-black text-neon-lime tracking-ultra uppercase mb-6 sm:mb-8">
+          Sobre Nosotros
+        </p>
+        <h2
+          class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-headline font-black tracking-tighter leading-none mb-8 sm:mb-10 text-shadow-neon"
+        >
+          Elevando el estándar de la industria
+        </h2>
+        <p
+          class="text-white/60 text-base sm:text-lg md:text-xl font-light mb-12 sm:mb-16 max-w-2xl border-l-2 border-neon-fuchsia pl-6 sm:pl-8"
+        >
+          En BLS Audiovisual, no solo alquilamos equipos; diseñamos
+          experiencias. Nuestra trayectoria se define por la precisión técnica
+          y una pasión inquebrantable por el detalle en cada montaje.
+        </p>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {
+            stats.map(({ value, suffix, label, color, border }) => (
+              <div class:list={["border-t pt-4", border]}>
+                <div
+                  class:list={["text-2xl sm:text-3xl md:text-4xl font-black", color]}
+                  data-counter={value}
+                  data-counter-suffix={suffix}
+                >
+                  0{suffix}
+                </div>
+                <div class="text-[9px] font-black uppercase tracking-widest text-white/40">
+                  {label}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <div
+        class="col-span-12 md:col-span-4 md:col-start-9 mt-8 md:-mt-20"
+        data-about-timeline
+      >
+        <div
+          class="bg-glitch-black p-6 sm:p-8 border border-white/10 space-y-10 sm:space-y-12 rotate-1"
+        >
+          {
+            timeline.map(({ num, title, color, text }) => (
+              <div class="relative" data-timeline-item>
+                <span
+                  class:list={[
+                    "absolute -left-3 sm:-left-4 top-0 text-3xl sm:text-4xl font-black opacity-20",
+                    color,
+                  ]}
+                >
+                  {num}
+                </span>
+                <h3
+                  class:list={[
+                    "font-headline font-black text-lg sm:text-xl uppercase mb-2",
+                    color,
+                  ]}
+                >
+                  {title}
+                </h3>
+                <p class="text-white/50 text-sm">{text}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Fila 2: Quiénes somos / Misión / Visión -->
+    <div class="relative">
+      <!-- Línea conectora horizontal (solo desktop) -->
+      <div class="absolute top-10 left-0 right-0 h-px bg-white/5 hidden sm:block" aria-hidden="true"></div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6">
+        {
+          pillars.map(({ label, color, text }, i) => (
+            <div class="relative bg-glitch-black border border-white/8 p-8 sm:p-10 group hover:border-white/20 transition-all duration-500">
+
+              {/* Barra de acento superior */}
+              <div class:list={["w-8 h-1 mb-6", `bg-${color}`]} />
+
+              <h3
+                class:list={[
+                  "font-headline font-black text-lg uppercase tracking-widest mb-5",
+                  `text-${color}`,
+                ]}
+              >
+                {label}
+              </h3>
+
+              <p class="text-white/75 text-sm sm:text-base leading-relaxed">
+                {text}
+              </p>
+
+              {/* Esquina decorativa */}
+              <div
+                class:list={[
+                  "absolute bottom-0 right-0 w-6 h-6 transition-all duration-500 opacity-0 group-hover:opacity-100",
+                  `border-b-2 border-r-2`,
+                  `border-${color}`,
+                ]}
+                aria-hidden="true"
+              />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+  </div>
+</section>

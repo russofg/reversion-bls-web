@@ -1,0 +1,419 @@
+---
+interface PortfolioItem {
+  id: string;
+  title: string;
+  category: string;
+  imageUrl: string;
+  description: string;
+}
+
+const events: PortfolioItem[] = [
+  {
+    id: "event1",
+    title: "AWS",
+    category: "Corporativo",
+    imageUrl: "/portfolio/evento-16.webp",
+    description:
+      "Pantallas de led, sonido, luces y silent talks para 500 asistentes.",
+  },
+  {
+    id: "event2",
+    title: "Presentación Fiat Abarth",
+    category: "Especiales",
+    imageUrl: "/portfolio/evento-2.webp",
+    description:
+      "Evento de lanzamiento de los nuevos Fiat Abarth, pantallas LED, iluminación ambiental y sistema de sonido distribuido.",
+  },
+  {
+    id: "event3",
+    title: "AWS",
+    category: "Corporativo",
+    imageUrl: "/portfolio/evento-1.webp",
+    description:
+      "Pantallas de led, sonido, luces y silent talks para 500 asistentes.",
+  },
+  {
+    id: "event4",
+    title: "Awards ADIDAS",
+    category: "Corporativo",
+    imageUrl: "/portfolio/evento-4.webp",
+    description:
+      "Sistema linearray de sonido, pantallas de led y luces en distintos espacios del DOK Haras.",
+  },
+  {
+    id: "event5",
+    title: "Congreso de Alfabetización",
+    category: "Institucionales",
+    imageUrl: "/portfolio/evento-5.webp",
+    description:
+      "Pantallas de led, sonido y luces en distintas salas de Palacio Libertad.",
+  },
+  {
+    id: "event6",
+    title: "Amcham Forum",
+    category: "Institucionales",
+    imageUrl: "/portfolio/evento-6.webp",
+    description:
+      "Pantalla de led, sonido, luces y CCTV para el evento de Amcham en el Hotel Alvear Icon.",
+  },
+  {
+    id: "event7",
+    title: "Council of the Americas",
+    category: "Institucionales",
+    imageUrl: "/portfolio/evento-7.webp",
+    description: "Pantalla de Led y luces.",
+  },
+  {
+    id: "event8",
+    title: "Evento Alchemy",
+    category: "Corporativo",
+    imageUrl: "/portfolio/evento-8.webp",
+    description:
+      "Pantallas de led, sonido y luces para el evento de Alchemy en el Hotel Four Season.",
+  },
+  {
+    id: "event9",
+    title: "Seminario Essen",
+    category: "Corporativo",
+    imageUrl: "/portfolio/evento-9.webp",
+    description:
+      "Pantallas led, totems de led, sonido y luces para el evento de Essen en el Hotel Sofitel Cardales.",
+  },
+  {
+    id: "event10",
+    title: "Seminario Essen",
+    category: "Corporativo",
+    imageUrl: "/portfolio/evento-10.webp",
+    description:
+      "Pantallas led, totems de led, sonido y luces para el evento de Essen en el Hotel Sofitel Cardales.",
+  },
+  {
+    id: "event12",
+    title: "Presentación Fiat Abarth",
+    category: "Especiales",
+    imageUrl: "/portfolio/evento-12.webp",
+    description:
+      "Evento de lanzamiento de los nuevos Fiat Abarth, pantallas LED, iluminación ambiental y sistema de sonido distribuido.",
+  },
+  {
+    id: "event11",
+    title: "Regional Management Meeting LATAM — HOLCIM",
+    category: "Corporativo",
+    imageUrl: "/portfolio/evento-11.webp",
+    description:
+      "Pantallas de led, sonido y luces para el evento de Holcim en el Hotel Faena ART y Hotel Alvear Icon.",
+  },
+  {
+    id: "event13",
+    title: "Presentación de Productos NewSan",
+    category: "Corporativo",
+    imageUrl: "/portfolio/evento-13.webp",
+    description:
+      "Pantallas de led y tendido eléctrico en El Cubo de Vicente López.",
+  },
+  {
+    id: "event14",
+    title: "Presentación de Productos NewSan",
+    category: "Corporativo",
+    imageUrl: "/portfolio/evento-14.webp",
+    description:
+      "Pantallas de led y tendido eléctrico en El Cubo de Vicente López.",
+  },
+  {
+    id: "event15",
+    title: "Charlas en la Universidad Torcuato Di Tella",
+    category: "Institucionales",
+    imageUrl: "/portfolio/evento-15.webp",
+    description:
+      "Producción audiovisual completa para ceremonia de inauguración con autoridades y transmisión en directo.",
+  },
+];
+---
+
+<section class="relative py-20 sm:py-32 bg-glitch-black" id="portfolio">
+  <div class="container mx-auto px-5 sm:px-6">
+    <div
+      class="mb-10 sm:mb-16 flex flex-col sm:flex-row sm:items-end justify-between gap-6"
+    >
+      <div>
+        <p
+          class="text-xs font-black text-neon-lime tracking-ultra uppercase mb-4"
+        >
+          Nuestro Portfolio
+        </p>
+        <h2
+          class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-headline font-black tracking-tighter text-white"
+        >
+          Experiencias<br />Memorables
+        </h2>
+      </div>
+      <div class="flex gap-3 sm:gap-4">
+        <button
+          class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 border border-neon-lime flex items-center justify-center text-neon-lime hover:bg-neon-lime hover:text-black transition-all duration-300"
+          aria-label="Ver eventos anteriores"
+          data-carousel-prev
+          data-magnetic
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"></path>
+          </svg>
+        </button>
+        <button
+          class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-neon-lime text-black flex items-center justify-center hover:bg-neon-black hover:text-white transition-all duration-300"
+          aria-label="Ver más eventos"
+          data-carousel-next
+          data-magnetic
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div
+      class="overflow-hidden -mx-5 sm:-mx-6 px-5 sm:px-6"
+      data-carousel-viewport
+    >
+      <div
+        class="flex gap-4 sm:gap-6 transition-transform duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)]"
+        data-carousel-track
+        role="list"
+      >
+        {
+          events.map((event) => (
+            <article
+              class="group relative shrink-0 w-[80vw] sm:w-[55vw] md:w-[38vw] lg:w-[28vw] cursor-pointer"
+              data-portfolio-item
+              data-lightbox-trigger={event.id}
+              role="listitem"
+            >
+              <div class="relative overflow-hidden glitch-border aspect-4/5">
+                <img
+                  src={event.imageUrl}
+                  alt={`${event.title} — ${event.description}`}
+                  class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                  loading="lazy"
+                  decoding="async"
+                  width="600"
+                  height="750"
+                />
+                <div class="absolute inset-0 bg-neon-blue/15 mix-blend-color group-hover:bg-transparent transition-all duration-500" />
+                <div class="absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-transparent opacity-70 group-hover:opacity-100 transition-opacity duration-500" />
+                <div class="absolute bottom-0 left-0 right-0 p-4 sm:p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                  <span class="inline-block text-neon-blue font-black text-[10px] uppercase tracking-[0.3em] mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    {event.category}
+                  </span>
+                  <h3 class="text-lg sm:text-xl md:text-2xl font-headline font-black text-white leading-tight mb-2 line-clamp-2">
+                    {event.title}
+                  </h3>
+                  <p class="text-white/60 text-sm leading-snug line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                    {event.description}
+                  </p>
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="fixed inset-0 z-300 bg-black/95 backdrop-blur-xl hidden items-center justify-center p-4 md:p-8"
+    data-lightbox
+    role="dialog"
+    aria-modal="true"
+    aria-label="Vista ampliada del evento"
+  >
+    <button
+      class="absolute top-4 right-4 sm:top-6 sm:right-6 z-10 w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center text-white/60 hover:text-white border border-white/20 hover:border-neon-blue transition-all"
+      data-lightbox-close
+      aria-label="Cerrar vista ampliada"
+    >
+      <svg
+        class="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M6 18 18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+    <div
+      class="flex flex-col md:flex-row gap-6 sm:gap-8 max-w-6xl w-full max-h-[90vh]"
+    >
+      <div class="flex-1 min-h-0">
+        <img
+          class="w-full h-full object-contain rounded"
+          data-lightbox-img
+          src=""
+          alt=""
+        />
+      </div>
+      <div class="md:w-72 shrink-0 flex flex-col justify-end pb-4">
+        <span
+          class="text-neon-blue font-black text-[10px] uppercase tracking-[0.3em] mb-2"
+          data-lightbox-category></span>
+        <h3
+          class="text-2xl sm:text-3xl font-headline font-black text-white mb-4"
+          data-lightbox-title
+        >
+        </h3>
+        <p
+          class="text-white/60 text-sm sm:text-base leading-relaxed"
+          data-lightbox-desc
+        >
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ eventsJSON: JSON.stringify(events) }}>
+  const allEvents = JSON.parse(eventsJSON);
+  const track = document.querySelector("[data-carousel-track]");
+  const prevBtn = document.querySelector("[data-carousel-prev]");
+  const nextBtn = document.querySelector("[data-carousel-next]");
+  const viewport = document.querySelector("[data-carousel-viewport]");
+  const lightbox = document.querySelector("[data-lightbox]");
+  const lbImg = document.querySelector("[data-lightbox-img]");
+  const lbTitle = document.querySelector("[data-lightbox-title]");
+  const lbDesc = document.querySelector("[data-lightbox-desc]");
+  const lbCategory = document.querySelector("[data-lightbox-category]");
+  const lbClose = document.querySelector("[data-lightbox-close]");
+
+  let currentIndex = 0;
+  let wasDragged = false;
+
+  function getSlideWidth() {
+    const slide = track?.firstElementChild;
+    if (!slide) return 0;
+    const gap = window.innerWidth < 640 ? 16 : 24;
+    return slide.getBoundingClientRect().width + gap;
+  }
+
+  function getMaxIndex() {
+    if (!viewport || !track) return 0;
+    const vw = viewport.getBoundingClientRect().width;
+    const sw = getSlideWidth();
+    if (sw === 0) return 0;
+    const visible = Math.max(1, Math.floor(vw / sw));
+    return Math.max(0, track.children.length - visible);
+  }
+
+  function goTo(index) {
+    currentIndex = Math.max(0, Math.min(index, getMaxIndex()));
+    if (track)
+      track.style.transform = `translateX(-${currentIndex * getSlideWidth()}px)`;
+  }
+
+  prevBtn?.addEventListener("click", () => goTo(currentIndex - 1));
+  nextBtn?.addEventListener("click", () => goTo(currentIndex + 1));
+
+  let startX = 0;
+
+  viewport?.addEventListener(
+    "touchstart",
+    (e) => {
+      startX = e.touches[0].clientX;
+      wasDragged = false;
+    },
+    { passive: true },
+  );
+
+  viewport?.addEventListener(
+    "touchmove",
+    (e) => {
+      if (Math.abs(e.touches[0].clientX - startX) > 10) wasDragged = true;
+    },
+    { passive: true },
+  );
+
+  viewport?.addEventListener("touchend", (e) => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      diff > 0 ? goTo(currentIndex + 1) : goTo(currentIndex - 1);
+    }
+  });
+
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => goTo(currentIndex), 150);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (!lightbox?.classList.contains("hidden")) return;
+    const section = document.querySelector("#portfolio");
+    if (!section) return;
+    const rect = section.getBoundingClientRect();
+    if (rect.top >= window.innerHeight || rect.bottom <= 0) return;
+    if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      goTo(currentIndex - 1);
+    }
+    if (e.key === "ArrowRight") {
+      e.preventDefault();
+      goTo(currentIndex + 1);
+    }
+  });
+
+  document.querySelectorAll("[data-lightbox-trigger]").forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      if (wasDragged) return;
+      const eid = trigger.getAttribute("data-lightbox-trigger");
+      const ev = allEvents.find((e) => e.id === eid);
+      if (!ev || !lightbox) return;
+      lbImg?.setAttribute("src", ev.imageUrl);
+      lbImg?.setAttribute("alt", `${ev.title} — ${ev.description}`);
+      if (lbTitle) lbTitle.textContent = ev.title;
+      if (lbDesc) lbDesc.textContent = ev.description;
+      if (lbCategory) lbCategory.textContent = ev.category;
+      lightbox.classList.remove("hidden");
+      lightbox.classList.add("flex");
+      document.body.style.overflow = "hidden";
+      lbClose?.focus();
+    });
+  });
+
+  function closeLightbox() {
+    lightbox?.classList.add("hidden");
+    lightbox?.classList.remove("flex");
+    document.body.style.overflow = "";
+  }
+
+  lbClose?.addEventListener("click", closeLightbox);
+  lightbox?.addEventListener("click", (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !lightbox?.classList.contains("hidden"))
+      closeLightbox();
+  });
+</script>
